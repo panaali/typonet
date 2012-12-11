@@ -30,21 +30,22 @@ $(document).ready(function() {
 		}
 	}
 	
-	
+	var k = 0;
 	
 	function keypressing(){
 		$("input").keyup(function(event){
 			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || event.which == 8 ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
-
+				if(event.which == 8 && k>=1) k--;
 				input = $('#input').val();
-				/* for(textch as textchs){
-					$alf = textchs[textch];
-				}; */
-				console.log('a : ' + word[1].charAt(0) + ' b : ' + input);
-				if( word[0] == input )
-					$('.true').text('YES!'); 
-				else
-					$('.true').text('No!'); 
+				wordchs = word[0].split("");
+				inputchs = input.split("");
+				console.log('$ : ' + word[0].charAt(k) + ' % : ' + inputchs[k] + ' k : ' + k );
+				if( word[0].charAt(k) == inputchs[k] ){
+					$('.true').text('YES!');
+					k++;
+				}else{
+					$('.true').text('No!');
+				}
 			}
 		})
 	};
