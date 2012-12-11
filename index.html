@@ -12,39 +12,53 @@ $(document).ready(function() {
 	
 	
 	
-	var text = $('#text').text();
 	var chs;
+	var text = $('#text').text();
 	word = text.split(" ");
-	for(ch in word){
-		console.log(word[ch]);
-		chs = word[ch].split("");
-		for(y in chs) {
-			console.log(chs[y]);
-			// End of Charachter
+	textchs = text.split("");
+	function spilter(){
+		for(ch in word){
+			console.log(word[ch]);
+			chs = word[ch].split("");
+			for(y in chs) {
+				arg = chs[y];
+				console.log(chs[y]);
+				// End of Charachter
+			}
+			// End of Word
+			console.log("++++++++++++++");
 		}
-		// End of Word
-		console.log("++++++++++++++");
 	}
 	
 	
 	
 	function keypressing(){
-		$("input").keydown(function(){
-			input = $('#input').val();
-			$("span").text(input);
-			console.log(input);
-		});
-	}
+		$("input").keyup(function(event){
+			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || event.which == 8 ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
+
+				input = $('#input').val();
+				/* for(textch as textchs){
+					$alf = textchs[textch];
+				}; */
+				console.log('a : ' + word[1].charAt(0) + ' b : ' + input);
+				if( word[0] == input )
+					$('.true').text('YES!'); 
+				else
+					$('.true').text('No!'); 
+			}
+		})
+	};
+	
 	
 	keypressing();
-	
 	
 })
 </script>
 </head>
 <body>
 <span></span>
-<div id="text">Salam Khoobi. Kojaii man inja hastam</div>
+<span class="true"></span>
+<div id="text">salam Khoobi. Kojaii man inja hastam</div>
 <input type="text" name="input" id="input"/>
 </body>
 </html>
