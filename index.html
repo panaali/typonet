@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="jquery.js"></script>
+<title>Test</title>
+
+<script>
+$(document).ready(function() {
+	var text = $('#text').text();
+	
+	word = text.split(" ");
+	inputbtn = $('#inputbtn').text();
+	console.log(inputbtn);
+})
+</script>
+</head>
+<body>
+<div id="text">Salam Khoobi. Kojaii man inja hastam </div>
+<input type="text" name="input" id="inputbtn"/>
+</body>
+</html>
