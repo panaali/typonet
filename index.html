@@ -6,23 +6,30 @@
 <title>Test</title>
 
 <script>
+var i = 0 ;
 $(document).ready(function() {
 	var text = $('#text').text();
-	
+	var chs;
 	word = text.split(" ");
-	inputbtn = $('#inputbtn').text();
-	console.log(inputbtn);
-	
-	
-	
-	
-	
-	
+	for(ch in word){
+		console.log(word[ch]);
+		chs = word[ch].split("");
+		for(y in chs) {
+			console.log(chs[y]);
+		}
+		console.log("++++++++++++++");
+	}
+	$("input").keyup(function(){
+		inputbtn = $('#inputbtn').val();
+			$("span").text(inputbtn);
+				console.log(inputbtn);
+	});
 })
 </script>
 </head>
 <body>
-<div id="text">Salam Khoobi. Kojaii man inja hastam </div>
+<span></span>
+<div id="text">Salam Khoobi. Kojaii man inja hastam</div>
 <input type="text" name="input" id="inputbtn"/>
 </body>
 </html>
