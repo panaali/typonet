@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>A simple socketIo example</title>
+		
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="socket.io.min.js"></script>
+		
+		<style>
+			body div{
+				display: block;
+				clear: both;
+			}
+			
+			#req {
+				float: left;
+				margin-right: 15px;
+			}
+		</style>
+		
+		<script>
+		$(document).ready(function(){
+			function __(data) {
+				$("#res").append(data);
+			};
+		
+			var socket = io.connect("http://localhost:1370");
+			$("#send").click(function(){
+				var req = $("#txt").val();
+				socket.emit('packet', {methodName: req, params: {a: 123}} );
+			});
+			
+			
+			$("#create").click(function(){
+				var roomName = $("#roomName").val();
+				var userName = $("#userName").val();
+				socket.emit('packet', {
+					methodName: 'createRoom', 
+					params: {
+						roomName: roomName, 
+						userName: userName
+					}
+				});
+			});
+			
+			$("#joinBtn").click(function(){
+				var req = $("#roomNameForJoin").val();
+				var user = $("#userNameForJoin").val();
+				socket.emit('packet', {methodName: 'joinRoom', params: {roomName: req, userName: user}} );
+			});
+			
+			
+			$("#roomDelBtn").click(function(){
+				var val = $("#roomNameForDel").val();
+				socket.emit('packet', { methodName: 'deleteRoom', params: {roomName: val} } );
+			});
+			
+			socket.on('packet', function(packet){
+				packetHandler(packet, socket);
+			});
+			
+			
+			socket.on('userJoinView', function(data) {
+				__("<p>" + data.params.msg +"</p>");
+			});
+			
+			var methods = {
+				socket: "",
+				
+				addItem: function(options, socket) {
+					console.log(options);
+					//$("#res").append(options.a);
+				},
+				
+				deleteRoom: function(params, socket) {
+					__("<p>" + params.msg || "A room deleted..." + "</p>");
+				},
+				
+				getRooms: function(params, socket) {
+					console.log(params);
+				},
+				
+				roomLeave: function(params, socket) {
+					__("<p>" + params.userName ? params.userName + " left the room " + params.roomName || "" : "A user left the room " + params.userName || "" + " ..." + "</p>");
+				},
+				
+				broadcast: function(options) {
+					//msg, users, escapeToSend
+				},
+			};
+			function packetHandler(packet, socket) {
+				var self = this;
+				var methodName = packet.methodName || null;
+				if ( socket != false ) {
+					if ( methods[methodName] ) {
+						methods[methodName]( packet.params || {} , socket);
+					}
+				} else {
+					//self.logger("packetHandler(): The socket resource is not valid...");
+				}
+			};
+		});
+		</script>
+	
+	</head>
+
+	<body>
+		<!-- thanks to see the source, siavash !-->
+		<div id="req">
+			<input id="txt" type="text" />
+			<button id="send"> Send! </button>
+		</div>
+		<div id="room">
+			<input id="roomName" type="text" />
+			<input id="userName" type="text" />
+			<button id="create"> Create! </button>
+		</div>
+		
+		<div id="join">
+			<input id="roomNameForJoin" type="text" />
+			<input id="userNameForJoin" type="text" />
+			<button id="joinBtn"> Join! </button>
+		</div>
+		
+		<div id="delRoom">
+			<input id="roomNameForDel" type="text" />
+			<button id="roomDelBtn"> Delete! </button>
+		</div>
+		
+		<div id="res">
+			
+		</div>
+	
+	</body>
+</html>
