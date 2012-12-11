@@ -29,26 +29,30 @@ $(document).ready(function() {
 			console.log("++++++++++++++");
 		}
 	}
-	var w = 0;
-	var k = 0;
-	
+	var currentWord = 0;
+	var currentChar = 1;
 	function keypressing(){
 		$("input").keyup(function(event){
-			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || event.which == 8 ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
-				if(event.which == 8 && k>=1) 
-					k--;
+			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
+				if(event.which == 8 && currentChar>=1) {	// pressed backspace
+					console.log('awa ' + currentChar)
+					currentChar--;
+					console.log('awb ' + currentChar)
+				}
 				input = $('#input').val();
 				wordchs = word[0].split("");
 				inputchs = input.split("");
-				console.log('$ : ' + word[0].charAt(k) + ' % : ' + inputchs[k] + ' k : ' + k );
-				if( word[0].charAt(k) == inputchs[k] ){
+				console.log('$ :' + word[0].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
+				if( word[0].slice(0,currentChar) == input.slice(0,currentChar) ){
 					$('.true').text('YES!');
-					k++;
+					currentChar++;
 				}else{
 					$('.true').text('No!');
 				}
-				if(k == word[0].length){
-					$('.true').text('Finish!');
+				if(currentChar - 1 == word[0].length ){
+					if(event.which == 32){	// pressed space
+						$('.true').text('Finish!');
+					}
 				}
 					
 			}
