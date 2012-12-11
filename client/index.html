@@ -17,6 +17,16 @@
 				float: left;
 				margin-right: 15px;
 			}
+			
+			.red {
+				color: red;
+				font-weigh: bold;
+			}
+			
+			.time {
+				color: gray;
+				
+			}
 		</style>
 		
 		<script>
@@ -56,6 +66,11 @@
 				socket.emit('packet', { methodName: 'deleteRoom', params: {roomName: val} } );
 			});
 			
+			$("#sendMsg").click(function(){
+				var val = $("#msg").val();
+				socket.emit('packet', { methodName: 'MessageAdd', params: {message: val} } );
+			});
+			
 			socket.on('packet', function(packet){
 				packetHandler(packet, socket);
 			});
@@ -83,6 +98,11 @@
 				
 				roomLeave: function(params, socket) {
 					__("<p>" + params.userName ? params.userName + " left the room " + params.roomName || "" : "A user left the room " + params.userName || "" + " ..." + "</p>");
+				},
+				
+				MessageView: function(params, socket) {
+				console.log(123);
+					__("<p><span class='red'>" + params.sender + "</span>: " + params.msg + "<span class='time'>[" + params.time + "]</span></p>");
 				},
 				
 				broadcast: function(options) {
@@ -130,6 +150,11 @@
 		<div id="delRoom">
 			<input id="roomNameForDel" type="text" />
 			<button id="roomDelBtn"> Delete! </button>
+		</div>
+		
+		<div id="chat">
+			<input id="msg" type="text" value="message" />
+			<button id="sendMsg"> Delete! </button>
 		</div>
 		
 		<div id="res">

@@ -56,7 +56,7 @@ App.SocketIO = {
 				var G_Methods = self.methods;
 				var actionLevel, userLevel;
 				if (rooms[roomName] && rooms[roomName].users[userName] ) {
-					if ( self.rooms.acl[action] && self.rooms.acl[action] == rooms[roomName].users[userName].level) {
+					if ( self.rooms.acl[action] && self.rooms.acl[action] <= rooms[roomName].users[userName].level) {
 						return true;
 					}
 				}
@@ -166,13 +166,16 @@ App.SocketIO = {
 				var self = App.SocketIO;
 				var methods = self.rooms.methods;//alternativly : this
 				if (socket.id) {
-					methods.getUserRoom(socket.id, function(room, user) {
-						if (room) {
-							packet = App.SocketIO.methods.packetCreator('MessageView', {msg: message});
-							socket.broadcast.to(room).
-						}
-					})
-					methods.checkRole('MessageAdd', )
+					room = socket.roomName;
+					uName = socket.userName;
+					
+					console.log(message);
+					uName = methods.getUserName(socket);
+					if (methods.checkRole('MessageAdd', uName, room)) {
+						
+						packet = App.SocketIO.methods.packetCreator('MessageView', {msg: message, sender: uName, time: Math.round( (new Date().getTime() ) / 1000 ) });
+						socket.broadcast.to(room).emit('packet', packet);
+					}
 				}
 			},
 			
@@ -182,7 +185,7 @@ App.SocketIO = {
 				var ret = [];
 				for ( x in rooms ) {
 					for ( y in rooms[x].users ) {
-						if ( rooms[x].users[y].id == clientID ) {
+						if ( rooms[x] && rooms[x].users[y].id == clientID ) {
 							if ( callback && typeof callback == "function")
 								callback(x, y);
 							ret.push(x);//x->roomName, y->userName
@@ -350,6 +353,12 @@ App.SocketIO = {
 		getRooms: function(params, socket) {
 			var pkt = this.packetCreator('getRooms', {rooms: App.SocketIO.rooms.rooms} );
 			socket.emit('packet', pkt);
+		},
+		
+		MessageAdd: function(params, socket) {
+			if (socket.roomName) {
+				App.SocketIO.rooms.methods.sendMessage(params.message, socket);
+			}
 		},
 		
 		/**=============<private methods>=============**/
