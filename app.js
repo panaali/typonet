@@ -1,6 +1,5 @@
 ;
 var App = App || {};
-//test
 App.SocketIO = {
 	config: {
 	},
