@@ -29,7 +29,7 @@ $(document).ready(function() {
 	
 	
 	function keypressing(){
-		$("input").keyup(function(){
+		$("input").keydown(function(){
 			input = $('#input').val();
 			$("span").text(input);
 			console.log(input);
