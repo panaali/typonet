@@ -38,7 +38,7 @@ App.SocketIO = {
 			ElementRemove: 4,
 			AddElementView: 1,
 			
-			MessageAdd: 2,//member
+			MessageAdd: 1,//guest
 			MessageView: 1,//guest
 			
 			UserJoinView: 1,
@@ -158,6 +158,21 @@ App.SocketIO = {
 						});
 						socket.broadcast.in(roomName).emit('packet', packet);
 					}
+				}
+			},
+			
+			
+			sendMessage: function(message, socket) {
+				var self = App.SocketIO;
+				var methods = self.rooms.methods;//alternativly : this
+				if (socket.id) {
+					methods.getUserRoom(socket.id, function(room, user) {
+						if (room) {
+							packet = App.SocketIO.methods.packetCreator('MessageView', {msg: message});
+							socket.broadcast.to(room).
+						}
+					})
+					methods.checkRole('MessageAdd', )
 				}
 			},
 			
