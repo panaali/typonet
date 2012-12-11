@@ -29,13 +29,14 @@ $(document).ready(function() {
 			console.log("++++++++++++++");
 		}
 	}
-	
+	var w = 0;
 	var k = 0;
 	
 	function keypressing(){
 		$("input").keyup(function(event){
 			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || event.which == 8 ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
-				if(event.which == 8 && k>=1) k--;
+				if(event.which == 8 && k>=1) 
+					k--;
 				input = $('#input').val();
 				wordchs = word[0].split("");
 				inputchs = input.split("");
@@ -46,6 +47,10 @@ $(document).ready(function() {
 				}else{
 					$('.true').text('No!');
 				}
+				if(k == word[0].length){
+					$('.true').text('Finish!');
+				}
+					
 			}
 		})
 	};
