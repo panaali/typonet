@@ -361,6 +361,18 @@ App.SocketIO = {
 			}
 		},
 		
+		//set the name for client
+		setName: function(params, socket) {
+			if (!socket.roomName) { //if already is not in any room...
+				if (!App.SocketIO.rooms.methods.getUserName(socket)) {
+					//the user does not exists, so you can create it
+					socket.emit('packet', {methodName: 'setName', params: {success: true, message: 'The username is valid!'} });
+				}
+			} else {
+				socket.emit('packet', {methodName: 'setName', params: {success: false, message: 'The username is already exists!'} });
+			}
+		},
+		
 		/**=============<private methods>=============**/
 		broadcast: function(params, socket) {
 			//msg, users, escapeToSend

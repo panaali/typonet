@@ -32,6 +32,8 @@
 		
 		<script>
 		$(document).ready(function(){
+			var name = null;
+			
 			function __(data) {
 				$("#res").append(data);
 			};
@@ -76,6 +78,18 @@
 				packetHandler(packet, socket);
 			});
 			
+			socket.on('connect', function(packet){
+				if (name == null) {
+					var _name=prompt("Please enter your name");
+					while (_name == null || $.trim(_name) == "") {
+						_name=prompt("Please enter your name");
+					}
+					name = _name;
+				}
+				
+				socket.emit('packet', {methodName: 'setName', params: {name: name}});
+			});
+			
 			
 			socket.on('userJoinView', function(data) {
 				__("<p>" + data.params.msg +"</p>");
@@ -102,17 +116,27 @@
 				},
 				
 				MessageView: function(params, socket) {
-				console.log(123);
 					__("<p><span class='red'>" + params.sender + "</span>: " + params.msg + "<span class='time'>[" + params.time + "]</span></p>");
+				},
+				
+				//response form server after setting the name
+				setName: function(params) {
+					if (params.success || params.success != true) {
+						var _name=prompt("Please enter your name");
+						while (_name == null || $.trim(_name) == "") {
+							_name=prompt("Please enter your name");
+						}
+						name = _name;
+						socket.emit('packet', {methodName: 'setName', params: {name: name}});
+					} else {
+						alert("the name is valid...");
+					}
 				},
 				
 				broadcast: function(options) {
 					//msg, users, escapeToSend
 				},
 				
-				MessageView: function(params, socket) {
-					
-				}	
 			};
 			function packetHandler(packet, socket) {
 				var self = this;
