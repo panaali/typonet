@@ -35,6 +35,7 @@ $(document).ready(function() {
 	var currentChar = 1;
 	var wrongCount = 0;
 	var wrongCountTotal = 0;
+	var startTime =0
 	function keypressing(){
 		var wordAlt = sentence.split(" "); 		//startup green first word
 		for(no in word){
@@ -47,6 +48,9 @@ $(document).ready(function() {
 		newSentence = "";
 		
 		$("#input").keyup(function(event){
+			if(startTime == 0){
+				startTime = new Date().getTime();
+			}
 			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
 				if(event.which == 8 && currentChar>=1) {	// pressed backspace
 					currentChar--;
@@ -108,8 +112,11 @@ $(document).ready(function() {
 					}
 					if(currentWord == word.length){		// Totally finished !!
 						socketEndSentence({wrongCountTotal : wrongCountTotal});
+						var endTime  = new Date().getTime();
+						gameTime = ( endTime - startTime)/60000 ;
 						$('#true').text('*+*+*+*+*+*');			
 						$('#accuracy').text('Your Accuracy is : ' + (1 - wrongCountTotal / sentenceChs.length )*100 );			
+						$('#wpm').text('Your WPM is : ' +  word.length / gameTime );			
 					}
 				}
 					
@@ -132,5 +139,6 @@ $(document).ready(function() {
 <input type="text" name="input" id="input"/>
 </body>
 <div id="accuracy"></div><br><br><br><br>
+<div id="wpm"></div><br><br><br><br>
 	<div id="true"></div>
 </html>
