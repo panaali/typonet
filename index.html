@@ -89,14 +89,14 @@ $(document).ready(function() {
 			if(startTime == 0){
 				startTime = new Date().getTime();
 			}
-			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
+			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) || (event.which == 32) || (event.which == 189) || (event.which == 187) || (event.which == 219) || (event.which == 220) || (event.which == 221) || (event.which == 168) || (event.which == 222) || (event.which == 188) || (event.which == 190) || (event.which == 191) || (event.which >= 48 && event.which <= 57) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
 				if(event.which == 8 && currentChar>=1) {	// pressed backspace
 					currentChar--;
 				}
 				input = $('#input').val();
 				wordchs = word[currentWord].split("");
 				inputchs = input.split("");
-				//console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
+				console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
 				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
 					socketTrueKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
 					//$('#true').text('+');				// true key pressed
