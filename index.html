@@ -11,7 +11,7 @@ $(document).ready(function() {
 	
 	
 	
-	
+	$('#input').focus();
 	var sentence,
     words,
     chars = {};
@@ -34,6 +34,16 @@ $(document).ready(function() {
 	var currentChar = 1;
 	var wrongCount = 0;
 	function keypressing(){
+		var wordAlt = sentence.split(" "); 		//startup green first word
+		for(no in word){
+			if(wordAlt[no] == wordAlt[currentWord]){
+				wordAlt[no] = '<span style="color:green; font-size:130%; ">' + wordAlt[no] + '</span>';
+			} 
+			newSentence += ' ' + wordAlt[no];
+		}
+		$('#sentence').html(newSentence);
+		newSentence = "";
+		
 		$("#input").keyup(function(event){
 			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
 				if(event.which == 8 && currentChar>=1) {	// pressed backspace
@@ -44,7 +54,7 @@ $(document).ready(function() {
 				inputchs = input.split("");
 				console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
 				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
-					socketTrueKey(array('key' => input.charAt(currentChar) , 'currentWord' => currentWord , 'currentChar' => currentChar ));
+					socketTrueKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
 					$('#true').text('+');				// true key pressed
 					var wordAlt = sentence.split(" "); ;
 					for(no in word){
@@ -58,7 +68,7 @@ $(document).ready(function() {
 					
 					currentChar++;
 				}else{
-					socketFalseKey(array('key' => input.charAt(currentChar) , 'currentWord' => currentWord , 'currentChar' => currentChar ));
+					socketFalseKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
 					$('#true').text('-');				// false key pressed
 					wrongCount++;
 					var wordAlt = sentence.split(" "); ;
@@ -73,13 +83,25 @@ $(document).ready(function() {
 				}
 				if(currentChar - 1 == word[currentWord].length ){
 					if(event.which == 32){				// space pressed 
-						socketEndWord(array('currentWord' => currentWord , 'wrong' => wrongCount ));
+						socketEndWord({currentWord : currentWord , wrong : wrongCount });
 						$('#true').text('***');			// This Word is Finished ! Let's Go Next
 						$("#input").val('');
 						$('#sentence').html(sentence);
 						currentWord++ ;
 						currentChar = 1;
 						wrongCount = 0;
+						
+						var wordAlt = sentence.split(" "); 			// new word green			
+						for(no in word){
+							if(wordAlt[no] == wordAlt[currentWord]){
+								wordAlt[no] = '<span style="color:green; font-size:130%; ">' + wordAlt[no] + '</span>';
+							} 
+							newSentence += ' ' + wordAlt[no];
+						}
+						$('#sentence').html(newSentence);
+						newSentence = "";
+						
+						
 					}
 					if(currentWord == word.length){		// Totally finished !!
 						socketEndSentence();
@@ -93,7 +115,10 @@ $(document).ready(function() {
 	
 	
 	keypressing();
-	
+	function socketTrueKey(){};
+	function socketFalseKey(){};
+	function socketEndWord(){};
+	function socketEndSentence(){};
 })
 </script>
 </head>
