@@ -17,6 +17,7 @@ $(document).ready(function() {
     chars = {};
     var newSentence = "";
 	sentence = $('#sentence').text();
+	sentenceChs = sentence.split("");
 	word = sentence.split(" ");
     wrongChars = {wordID: 0, charID: 0};
 
@@ -33,6 +34,7 @@ $(document).ready(function() {
 	var no = 0 ;
 	var currentChar = 1;
 	var wrongCount = 0;
+	var wrongCountTotal = 0;
 	function keypressing(){
 		var wordAlt = sentence.split(" "); 		//startup green first word
 		for(no in word){
@@ -52,7 +54,7 @@ $(document).ready(function() {
 				input = $('#input').val();
 				wordchs = word[currentWord].split("");
 				inputchs = input.split("");
-				console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
+				//console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
 				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
 					socketTrueKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
 					$('#true').text('+');				// true key pressed
@@ -71,6 +73,7 @@ $(document).ready(function() {
 					socketFalseKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
 					$('#true').text('-');				// false key pressed
 					wrongCount++;
+					wrongCountTotal++;
 					var wordAlt = sentence.split(" "); ;
 					for(no in word){
 						if(wordAlt[no] == wordAlt[currentWord]){
@@ -106,6 +109,7 @@ $(document).ready(function() {
 					if(currentWord == word.length){		// Totally finished !!
 						socketEndSentence();
 						$('#true').text('*+*+*+*+*+*');			
+						$('#accuracy').text('Your Accuracy is : ' + (1 - wrongCountTotal / sentenceChs.length )*100 );			
 					}
 				}
 					
@@ -127,6 +131,6 @@ $(document).ready(function() {
 <div id="sentence">salam Khoobi. Kojaii man inja hastam</div><br><br>
 <input type="text" name="input" id="input"/>
 </body>
-<div id="newSentence"></div><br><br><br><br>
+<div id="accuracy"></div><br><br><br><br>
 	<div id="true"></div>
 </html>
