@@ -12,46 +12,67 @@ $(document).ready(function() {
 	
 	
 	
-	var chs;
-	var text = $('#text').text();
-	word = text.split(" ");
-	textchs = text.split("");
-	function spilter(){
-		for(ch in word){
-			console.log(word[ch]);
-			chs = word[ch].split("");
-			for(y in chs) {
-				arg = chs[y];
-				console.log(chs[y]);
-				// End of Charachter
-			}
-			// End of Word
-			console.log("++++++++++++++");
-		}
+	var sentence,
+    words,
+    chars = {};
+    var newSentence = "";
+	sentence = $('#sentence').text();
+	word = sentence.split(" ");
+    wrongChars = {wordID: 0, charID: 0};
+
+	function splitter(sentence) {
+	    words = sentence.split(" ");
+	    
+	    for (word in words) {
+	        chars = words[word].split("");
+	    }
 	}
-	var currentWord = 0;
+	
+	
+	var currentWord  = 0;
+	var no = 0 ;
 	var currentChar = 1;
 	function keypressing(){
-		$("input").keyup(function(event){
+		$("#input").keyup(function(event){
 			if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
 				if(event.which == 8 && currentChar>=1) {	// pressed backspace
-					console.log('awa ' + currentChar)
 					currentChar--;
-					console.log('awb ' + currentChar)
 				}
 				input = $('#input').val();
-				wordchs = word[0].split("");
+				wordchs = word[currentWord].split("");
 				inputchs = input.split("");
-				console.log('$ :' + word[0].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
-				if( word[0].slice(0,currentChar) == input.slice(0,currentChar) ){
-					$('.true').text('YES!');
+				console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
+				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
+					$('#true').text('YES!');
+					var wordAlt = sentence.split(" "); ;
+					for(no in word){
+						if(wordAlt[no] == wordAlt[currentWord]){
+							wordAlt[no] = '<span style="color:green; font-size:130%; ">' + wordAlt[no] + '</span>';
+						} 
+						newSentence += ' ' + wordAlt[no];
+					}
+					$('#newSentence').html(newSentence);
+					newSentence = "";
+					
 					currentChar++;
 				}else{
-					$('.true').text('No!');
+					$('#true').text('No!');
+					
+					var wordAlt = sentence.split(" "); ;
+					for(no in word){
+						if(wordAlt[no] == wordAlt[currentWord]){
+							wordAlt[no] = '<span style="color:red; font-size:130%;">' + wordAlt[no] + '</span>';
+						} 
+						newSentence += ' ' + wordAlt[no];
+					}
+					$('#newSentence').html(newSentence);
+					newSentence = "";
 				}
-				if(currentChar - 1 == word[0].length ){
+				if(currentChar - 1 == word[currentWord].length ){
 					if(event.which == 32){	// pressed space
-						$('.true').text('Finish!');
+						$('#true').text('Finish!');
+						$("#input").val('');
+					$('#newSentence').html(sentence);
 					}
 				}
 					
@@ -67,8 +88,9 @@ $(document).ready(function() {
 </head>
 <body>
 <span></span>
-<span class="true"></span>
-<div id="text">salam Khoobi. Kojaii man inja hastam</div>
+<div id="true"></div>
+<div id="sentence">salam Khoobi. Kojaii man inja hastam</div>
 <input type="text" name="input" id="input"/>
 </body>
+<div id="newSentence"></div>
 </html>
