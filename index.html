@@ -107,7 +107,7 @@ $(document).ready(function() {
 						
 					}
 					if(currentWord == word.length){		// Totally finished !!
-						socketEndSentence();
+						socketEndSentence({wrongCountTotal : wrongCountTotal});
 						$('#true').text('*+*+*+*+*+*');			
 						$('#accuracy').text('Your Accuracy is : ' + (1 - wrongCountTotal / sentenceChs.length )*100 );			
 					}
