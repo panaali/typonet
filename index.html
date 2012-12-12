@@ -1,15 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
+<!-- 
+Proudly Presented by HyperTeanab Crew.
+ -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="jquery.js"></script>
 <title>Typonet</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <style>
 #sentence{
-	 direction: rtl;
-	   font-size: 50px;
+	direction: rtl;
+	font-size: 50px;
     margin: 200px auto 0px auto;
     text-align: center;
+	line-height: 50px;
 }
 #input-box{
 	   text-align: center;
@@ -20,7 +26,7 @@ input{
 	font-size:30px;
 }
 #accuracy{
-	color : blue ;
+	color : blue;
 	text-align: center;
 }
 #wpm{
@@ -44,9 +50,10 @@ input{
 
 
 </style>
-<script>
+<script type="text/javascript">
 var i = 0 ;
 $(document).ready(function() {
+<<<<<<< HEAD
 	
 	Array.prototype.inArray = function(needle) {
 	    var haystack = this;
@@ -57,6 +64,8 @@ $(document).ready(function() {
 	        return false;
 	}
 	
+=======
+>>>>>>> Woah , Backbone & Bootstrap
 	$('#input').focus();
 	var sentence,
     words,
@@ -106,7 +115,7 @@ $(document).ready(function() {
 			
 			
 		//	if ((event.which >= 65 && event.which <= 90) || (event.which >= 97 && event.which <= 122) || (event.which == 8) || (event.which == 32) || (event.which == 32) || (event.which == 189) || (event.which == 187) || (event.which == 219) || (event.which == 220) || (event.which == 221) || (event.which == 168) || (event.which == 222) || (event.which == 188) || (event.which == 190) || (event.which == 191) || (event.which >= 48 && event.which <= 57) ) { // 65-90 Lower Case , 97-122 Upper Case , 8 : backspace
-			if (event.which != 224 && event.which != 18 && event.which != 16  && event.which != 16 ) { // ESCAPE command , option , shift , 
+			if (event.which != 224 && event.which != 18 && event.which != 16  && event.which != 16 ) { // ESCAPE command , option , shift , ctrl
 				if(event.which == 8 && currentChar>=1) {	// pressed backspace
 					currentChar--;
 				}
@@ -190,12 +199,15 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="sentence">منت خدای را عزوجل که طاعتش موجب قربت Mennat Khoday ra Azzavajal Ke taa'tash mojebe qorbat</div><br><br>
-<div id="input-box"><input type="text" name="input" id="input"/></div>
-</body>
-<br />
-<div id="accuracy"></div>
-<div id="wpm"></div><br><br>
-	<div id="true"></div>
-	<div class="copywrite"><span>Presented by : Soroush & Ali Akbar</span></div>
+	<div class="container">
+		<div id="sentence">Literal is a preferred option for name spacing so that your JavaScript code</div><br><br>
+		<div id="input-box"><input type="text" name="input" id="input"/></div>
+		</body>
+		<br />
+		<div id="accuracy"></div>
+		<div id="wpm"></div><br><br>
+		<div id="true"></div>
+		<div class="copywrite"><span>Presented by : Soroush(ServerSide) & Ali Akbar(ClientSide)</span><div>©HyperTeanab</div></div>
+	</div>
+	<script src="js/bootstrap.min.js"></script>
 </html>

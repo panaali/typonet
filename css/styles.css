@@ -1,0 +1,125 @@
+/*!
+ * Typonet v1.0.0
+ *
+ * Copyright 2012 HyperTeanab
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built to be the world's best open source multi player typing Game.
+ */
+ 
+ /*======================Login==========================*/
+body {
+
+	background-color:#f5f5f5;
+}
+.form-signin {
+	text-align:center;
+	max-width:300px;
+	padding:19px 29px 29px;
+	margin:0 auto 20px;
+	background-color:#fff;
+	border:1px solid #e5e5e5;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow:0 1px 2px rgba(0,0,0,.05);
+	box-shadow:0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,.form-signin .checkbox {
+	margin-bottom:10px;
+}
+.form-signin input[type="text"],.form-signin input[type="password"] {
+	font-size:16px;
+	height:auto;
+	margin-bottom:15px;
+	padding:7px 9px;
+	text-align:center;
+	width: 213px;
+}
+/* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #E1E1E1;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+      #wrap .container {
+      	padding-top:100px;
+        width: auto;
+        max-width: 680px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }      
+/*======================Sentence==========================*/
+#sentence {
+	direction:rtl;
+	font-size:50px;
+	margin:200px auto 0px auto;
+	text-align:center;
+	line-height:50px;
+}
+#input-box {
+	text-align:center;
+	font-size:30px;
+}
+input {
+	font-size:30px;
+}
+#accuracy {
+	color:blue;
+	text-align:center;
+}
+#wpm {
+	color:blue;
+	text-align:center;
+}
+.round {
+	font-size:40px;
+	color:yellow;
+}
+.copywrite {
+	text-align:center;
+	margin-top:100px;
+}
+.copywrite span {
+	text-align:center;
+	height: 200px;
+}
+/*======================room==========================*/
