@@ -17,7 +17,7 @@ App.SocketIO = {
 				desc: 'test room',
 				admin: 'admin',
 				users: {
-					admin :{  
+					admin :{
 						id: 1,
 						name: 'soroush',
 						level: 4,//admin (simillar to xmpp access levels [4,3,2,1])
@@ -136,9 +136,17 @@ App.SocketIO = {
 					return false;
 				var packet;
 				if (this.checkRole('RoomLeave', uName, roomName)) {
-					packet = App.SocketIO.methods.packetCreator('roomLeave', {userName: uName, roomName: roomName});
-					socket.broadcast.to(roomName).emit('packet', packet);
 					delete App.SocketIO.rooms.rooms[roomName].users[uName];
+					
+					packet = App.SocketIO.methods.packetCreator('packet', { 
+						methodName: 'leaveRoom', 
+						params: {
+							userName: uName, 
+							roomName: roomName, 
+							users: App.SocketIO.rooms.rooms[roomName].users
+						} 
+					});
+					socket.broadcast.to(roomName).emit('packet', packet);
 				}
 			},
 			
@@ -327,18 +335,33 @@ App.SocketIO = {
 		joinRoom: function(params, socket) {
 			if (params.roomName && params.userName && socket.id) {
 				if (App.SocketIO.rooms.methods.joinRoom(params.roomName, params.userName, socket.id, socket) ) {
-					socket.emit('joinRoom', {
+					socket.emit('packet', {
 						methodName: 'joinRoom',
-						params: {msg: 'User: "' + params.userName + '" Joined successfuly', rooms: App.SocketIO.rooms.rooms}
+						params: {
+							users: App.SocketIO.rooms.rooms[params.roomName].users, 
+							admin: App.SocketIO.rooms.rooms[params.roomName].admin
+						}
 					});
 				}
 			}
 		},
 		
 		leaveRoom: function(params, socket) {
+			var success = 0;
+			
 			if (socket.roomName) {
-				App.SocketIO.rooms.methods.leaveRoom(socket.roomName, socket);
+				if (App.SocketIO.rooms.methods.leaveRoom(socket.roomName, socket) ) {
+					success = 1;
+				})
+			} else {
+				success = 0;
 			}
+			socket.emit('packet', {
+				methodName: 'leaveRoom',
+				params: {
+					success: success
+				}
+			});
 		},
 		
 		deleteRoom: function(params, socket) {
@@ -363,14 +386,17 @@ App.SocketIO = {
 		
 		//set the name for client
 		setName: function(params, socket) {
-			if (!socket.roomName) { //if already is not in any room...
-				if (!App.SocketIO.rooms.methods.getUserName(socket)) {
-					//the user does not exists, so you can create it
-					socket.emit('packet', {methodName: 'setName', params: {success: true, message: 'The username is valid!'} });
+			for ( room in App.SocketIO.rooms.rooms) {
+				for (user in App.SocketIO.rooms.rooms[room].users) {
+					console.log(App.SocketIO.rooms.rooms[room].users[user]);
+					if (App.SocketIO.rooms.rooms[room].users[user].name == params.name) {
+						socket.emit('packet', {methodName: 'setName', params: {success: 0, message: 'The username is already exists!'} });
+					} else {
+						//the user does not exists, so you can create it
+						socket.emit('packet', {methodName: 'setName', params: {success: 1, message: 'The username is valid!'} });
+					}
 				}
-			} else {
-				socket.emit('packet', {methodName: 'setName', params: {success: false, message: 'The username is already exists!'} });
-			}
+			}		
 		},
 		
 		/**=============<private methods>=============**/
