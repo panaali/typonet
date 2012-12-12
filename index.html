@@ -6,6 +6,7 @@
 <title>Typonet</title>
 <style>
 #sentence{
+	 direction: rtl;
 	   font-size: 50px;
     margin: 200px auto 0px auto;
     text-align: center;
@@ -32,10 +33,10 @@ input{
 
 .copywrite {
 	text-align: center;
+	margin-top : 150px;
 }
 .copywrite span{
 	text-align: center;
-	margin-bottom : 20px;
 	height : 200px;
 }
 
@@ -152,7 +153,7 @@ $(document).ready(function() {
 						var endTime  = new Date().getTime();
 						gameTime = ( endTime - startTime)/60000 ;
 						//$('#true').text('*+*+*+*+*+*');			
-						$('#accuracy').text('Accuracy : ' + Math.round(1 - wrongCountTotal / sentenceChs.length )*100  + ' %' ); 			
+						$('#accuracy').text('Accuracy : ' + Math.round(( 1 - wrongCountTotal / sentenceChs.length )*100)  + ' %' ); 			
 						$('#wpm').text('WPM  : ' +  Math.round(word.length / gameTime)  );			
 					}
 				}
@@ -171,7 +172,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="sentence">Salam Khoobi Kojaii</div><br><br>
+<div id="sentence">منت خدای را عزوجل که طاعتش موجب قربت Mennat Khoday ra Azzavajal Ke taa'tash mojebe qorbat.</div><br><br>
 <div id="input-box"><input type="text" name="input" id="input"/></div>
 </body>
 <br />
