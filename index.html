@@ -43,7 +43,7 @@ $(document).ready(function() {
 				inputchs = input.split("");
 				console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
 				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
-					$('#true').text('YES!');
+					$('#true').text('+');
 					var wordAlt = sentence.split(" "); ;
 					for(no in word){
 						if(wordAlt[no] == wordAlt[currentWord]){
@@ -51,12 +51,12 @@ $(document).ready(function() {
 						} 
 						newSentence += ' ' + wordAlt[no];
 					}
-					$('#newSentence').html(newSentence);
+					$('#sentence').html(newSentence);
 					newSentence = "";
 					
 					currentChar++;
 				}else{
-					$('#true').text('No!');
+					$('#true').text('-');
 					
 					var wordAlt = sentence.split(" "); ;
 					for(no in word){
@@ -65,16 +65,19 @@ $(document).ready(function() {
 						} 
 						newSentence += ' ' + wordAlt[no];
 					}
-					$('#newSentence').html(newSentence);
+					$('#sentence').html(newSentence);
 					newSentence = "";
 				}
 				if(currentChar - 1 == word[currentWord].length ){
-					if(event.which == 32){	// pressed space
-						$('#true').text('Finish!');			// This Word is Finished ! Let's Go Next
+					if(event.which == 32){				// space pressed 
+						$('#true').text('***');			// This Word is Finished ! Let's Go Next
 						$("#input").val('');
-						$('#newSentence').html(sentence);
+						$('#sentence').html(sentence);
 						currentWord++ ;
-						currentChar = 0;
+						currentChar = 1;
+					}
+					if(currentWord == word.length){		// Totally finished !!
+						$('#true').text('*+*+*+*+*+*');			
 					}
 				}
 					
@@ -90,9 +93,9 @@ $(document).ready(function() {
 </head>
 <body>
 <span></span>
-<div id="true"></div>
-<div id="sentence">salam Khoobi. Kojaii man inja hastam</div>
+<div id="sentence">salam Khoobi. Kojaii man inja hastam</div><br><br>
 <input type="text" name="input" id="input"/>
 </body>
-<div id="newSentence"></div>
+<div id="newSentence"></div><br><br><br><br>
+	<div id="true"></div>
 </html>
