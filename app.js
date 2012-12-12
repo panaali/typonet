@@ -17,7 +17,7 @@ App.SocketIO = {
 				desc: 'test room',
 				admin: 'admin',
 				users: {
-					admin :{
+					admin :{ 
 						id: 1,
 						name: 'soroush',
 						level: 4,//admin (simillar to xmpp access levels [4,3,2,1])
