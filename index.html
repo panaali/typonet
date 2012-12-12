@@ -4,7 +4,35 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="jquery.js"></script>
 <title>Test</title>
+<style>
+#sentence{
+	   font-size: 50px;
+    margin: 200px auto 0px auto;
+    text-align: center;
+}
+#input-box{
+	   text-align: center;
+		font-size: 30px;
+}
+input{
+	font-size:30px;
+}
+#accuracy{
+	color : blue ;
+	text-align: center;
+}
+#wpm{
+	color : blue ;
+	text-align: center;
+}
+.round{
+	 font-size: 40px;
+		color:yellow;
+}
 
+
+
+</style>
 <script>
 var i = 0 ;
 $(document).ready(function() {
@@ -61,7 +89,7 @@ $(document).ready(function() {
 				//console.log('$ :' + word[currentWord].slice(0,currentChar) + '% :' + input.slice(0,currentChar) + 'currentChar : ' + currentChar );
 				if( word[currentWord].slice(0,currentChar) == input.slice(0,currentChar) ){
 					socketTrueKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
-					$('#true').text('+');				// true key pressed
+					//$('#true').text('+');				// true key pressed
 					var wordAlt = sentence.split(" "); ;
 					for(no in word){
 						if(wordAlt[no] == wordAlt[currentWord]){
@@ -75,7 +103,7 @@ $(document).ready(function() {
 					currentChar++;
 				}else{
 					socketFalseKey({key : input.charAt(currentChar) , currentWord : currentWord , currentChar : currentChar });
-					$('#true').text('-');				// false key pressed
+					//$('#true').text('-');				// false key pressed
 					wrongCount++;
 					wrongCountTotal++;
 					var wordAlt = sentence.split(" "); ;
@@ -91,7 +119,7 @@ $(document).ready(function() {
 				if(currentChar - 1 == word[currentWord].length ){
 					if(event.which == 32){				// space pressed 
 						socketEndWord({currentWord : currentWord , wrong : wrongCount });
-						$('#true').text('***');			// This Word is Finished ! Let's Go Next
+						//$('#true').text('***');			// This Word is Finished ! Let's Go Next
 						$("#input").val('');
 						$('#sentence').html(sentence);
 						currentWord++ ;
@@ -114,9 +142,9 @@ $(document).ready(function() {
 						socketEndSentence({wrongCountTotal : wrongCountTotal});
 						var endTime  = new Date().getTime();
 						gameTime = ( endTime - startTime)/60000 ;
-						$('#true').text('*+*+*+*+*+*');			
-						$('#accuracy').text('Your Accuracy is : ' + (1 - wrongCountTotal / sentenceChs.length )*100 );			
-						$('#wpm').text('Your WPM is : ' +  word.length / gameTime );			
+						//$('#true').text('*+*+*+*+*+*');			
+						$('#accuracy').text('Accuracy : ' + Math.round(1 - wrongCountTotal / sentenceChs.length )*100  + ' %' ); 			
+						$('#wpm').text('WPM  : ' +  Math.round(word.length / gameTime)  );			
 					}
 				}
 					
@@ -134,11 +162,11 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<span></span>
-<div id="sentence">salam Khoobi. Kojaii man inja hastam</div><br><br>
-<input type="text" name="input" id="input"/>
+<div id="sentence">Salam Khoobi Kojaii</div><br><br>
+<div id="input-box"><input type="text" name="input" id="input"/></div>
 </body>
-<div id="accuracy"></div><br><br><br><br>
-<div id="wpm"></div><br><br><br><br>
+<br />
+<div id="accuracy"></div>
+<div id="wpm"></div><br><br>
 	<div id="true"></div>
 </html>
