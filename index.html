@@ -70,9 +70,11 @@ $(document).ready(function() {
 				}
 				if(currentChar - 1 == word[currentWord].length ){
 					if(event.which == 32){	// pressed space
-						$('#true').text('Finish!');
+						$('#true').text('Finish!');			// This Word is Finished ! Let's Go Next
 						$("#input").val('');
-					$('#newSentence').html(sentence);
+						$('#newSentence').html(sentence);
+						currentWord++ ;
+						currentChar = 0;
 					}
 				}
 					
