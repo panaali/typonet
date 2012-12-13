@@ -22,9 +22,23 @@ App.Login = Backbone.View.extend({
 	signin: function() {
 		// Socket staf for login ...
 		$('.form-signin').remove();
+		this.roomList();
 		return false;
-	}
+	},
+	roomList : function(){
+		$('.user-list').show();
+		$('.hero-unit').show();
+		console.log($('.user-list'));
+	},
+	GameList : function(){
+		
+	},
 });
+
+
+
+
+
 
 $(document).ready(function () {
 	obj = new App.Login({el:$('.container')});
