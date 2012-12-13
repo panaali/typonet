@@ -10,6 +10,7 @@ App.Views = App.Views || {};
 App.Login = Backbone.View.extend({
 	events : {
 		'click .login' : 'signin',
+		'click .btn-ready' : 'GameBox',
 	},
 	initialize: function()
     {
@@ -28,9 +29,10 @@ App.Login = Backbone.View.extend({
 	roomList : function(){
 		$('.user-list').show();
 		$('.hero-unit').show();
-		console.log($('.user-list'));
 	},
-	GameList : function(){
+	GameBox : function(){
+		$('.user-list').hide();
+		$('.hero-unit').hide();
 		
 	},
 });
